@@ -1,11 +1,17 @@
-
+import React from "react";
+import { StarProvider } from "./star/StarContext";
 import StarUniverse from "./star/StarUniverse";
-import "./css/styles.css"; // Import the CSS file
+import './css/App.css'; // Ensure you import the CSS file
 
-export default function App() {
+// TODO: Fix the CSS file layout
+function App() {
   return (
     <div className="canvas-container">
+      <StarProvider>
         <StarUniverse />
+      </StarProvider>
     </div>
   );
 }
+
+export default App;

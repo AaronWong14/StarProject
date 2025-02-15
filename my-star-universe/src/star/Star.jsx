@@ -1,16 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Sphere, Html } from "@react-three/drei";
+import { useStarContext } from "./StarContext";
 
-
-// TODO add more properties to the star such as color and emissive
-export default function Star({ starId, position, message }) {
+export default function Star({ starId }) {
+  const { stars } = useStarContext();
+  const [starInfo, setStarInfo] = useState(null);
   const [showInfo, setShowInfo] = useState(false);
+
+  useEffect(() => {
+    const star = stars.find((s) => s.starId === starId);
+    setStarInfo(star);
+  }, [stars, starId]);
+
+  if (!starInfo) {
+    return null; // or a loading spinner
+  }
 
   return (
     <mesh
-      position={position}
+      position={starInfo.position}
       onClick={(e) => {
-        e.stopPropagation(); // prevent parent controls from interfering
+        e.stopPropagation();
         setShowInfo((prev) => !prev);
       }}
     >
@@ -23,7 +33,8 @@ export default function Star({ starId, position, message }) {
       {showInfo && (
         <Html position={[0, 0.5, 0]} center>
           <div className='starPopup' 
-            style={{position: 'absolute',
+            style={{
+              position: 'absolute',
               top: '3%', right: '3%',
               backgroundColor: 'white', borderRadius: '15px',
               position: 'relative', width:'200%', padding: '0px' 
@@ -47,12 +58,11 @@ export default function Star({ starId, position, message }) {
               X
             </button>
             <div className='starInfo' style={{ padding: '40px' }}>
-              <p><strong>Star ID:</strong> {starId}</p>
-              <p><strong>Message:</strong> {message}</p>
-              <p><strong>Coordinates:</strong> [{position[0].toFixed(2)}, {position[1].toFixed(2)}, {position[2].toFixed(2)}]</p>
+              <p><strong>Star ID:</strong> {starInfo.starId}</p>
+              <p><strong>Message:</strong> {starInfo.message}</p>
+              <p><strong>Coordinates:</strong> [{starInfo.position[0].toFixed(2)}, {starInfo.position[1].toFixed(2)}, {starInfo.position[2].toFixed(2)}]</p>
             </div>
           </div>
-        
         </Html>
       )}
     </mesh>
