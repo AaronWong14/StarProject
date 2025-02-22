@@ -1,5 +1,5 @@
 /*
-    This file is the context provider for the Star Universe. It provides the information of all the stars.
+  This file is the context provider for the Star Universe. It provides the information of all the stars.
 */ 
 
 import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
@@ -9,6 +9,9 @@ const StarContext = createContext();
 
 export const useStarContext = () => useContext(StarContext);
 
+// TODO: add the date of when the star was created
+// TODO: cache the stars in the local storage so that 
+// we dont need to fetch the stars every time (ex: when screen is refreshed)
 export const StarProvider = ({ children }) => {
   const [stars, setStars] = useState([]);
 
@@ -53,6 +56,8 @@ export const StarProvider = ({ children }) => {
       createdStar.starId = starId;
       createdStar.position = generateStarRandomPosition();
       addStarToState(createdStar);
+      // Cache the new star in the stars state
+      setStars((prevStars) => [...prevStars, createdStar]);
     } catch (error) {
       console.error("Error creating star:", error);
     }
@@ -60,11 +65,14 @@ export const StarProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchStars = async () => {
-      const data = await getStars();
-      setStars(data);
+      console.log(stars.length);
+      if (stars.length === 0) {
+        const data = await getStars();
+        setStars(data);
+      }
     };
     fetchStars();
-  }, [getStars]);
+  }, [getStars, stars.length]);
 
   const addStar = (newStar) => {
     setStars((prev) => [...prev, newStar]);

@@ -57,6 +57,7 @@ export default function Star({ starId }) {
             >
               X
             </button>
+            {/* TODO: Add the date of when the star was created */}
             <div className='starInfo' style={{ padding: '40px' }}>
               <p><strong>Star ID:</strong> {starInfo.starId}</p>
               <p><strong>Message:</strong> {starInfo.message}</p>

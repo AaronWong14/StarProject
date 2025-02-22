@@ -1,35 +1,53 @@
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.canvas-container {
-  width: 100vw;
-  height: 100vh;
+.app-container {
+  width: 100%;
+  height: 200%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: black;
+  /* overflow: hidden; Prevent scroll bar */
+}
+
+.landing-page {
+  width: 100%;
+  height: 100vh;
+  /* display: flex; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+
+.landing-page h1 {
+  font-size: 3em;
+  /* margin-bottom: 20px; */
+}
+
+.landing-page button {
+  /* padding: 10px 20px; */
+  font-size: 1.2em;
+  cursor: pointer;
 }
 
 .star-universe {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   position: relative;
+  flex: 1;
 }
 
 canvas {
-  width: 100%;
+  width: 100vw;
   height: 100%;
   display: block;
   background-color: black;
